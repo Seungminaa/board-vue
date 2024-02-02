@@ -1,6 +1,6 @@
 <template>
         <ul id="myUL">
-            <li v-for="tod in list" v-bind:key="tod.no" @click="cancleTodo(tod.cancelFlag)">{{ tod.todo }}<span class="close"  @click="deleteTodo(tod.no)">X</span></li>
+            <li v-for="tod in list" v-bind:key="tod.no" v-bind:class="{checked: tod.cancelFlag}" @click="cancleTodo(tod.no)">{{ tod.todo }}<span class="close"  @click="deleteTodo(tod.no)">X</span></li>
         </ul>
 </template>
 
@@ -12,13 +12,8 @@ export default{
         deleteTodo(no) { 
             this.$emit('todo-delete',no)
         },
-        cancleTodo(cancelFlag) {
-            // if(!this.cancelFlag){
-                
-            // }else{
-
-            // }
-            this.$emit('todo-cancle',cancelFlag)
+        cancleTodo(no) {
+            this.$emit('todo-cancle',no)
         }
     }
 }

@@ -1,11 +1,12 @@
 <template>
     <HeadComponent v-on:save-todo="savetodo"/>
-    <BodyComponent v-bind:list="todoList" @todo-delete="deleteTodo" @todo-cancle="cancleTodo"/>
+    <BodyComponent v-bind:list="todoList" @todo-cancle="cancleTodo" @todo-delete="deleteTodo" />
   </template>
 
 <script>
 import HeadComponent from '@/components/HeadComponent.vue';
 import BodyComponent from '@/components/BodyComponent.vue';
+
 export default {
     components:{
         HeadComponent,
@@ -27,14 +28,19 @@ export default {
         savetodo (todo){
             let idx = this.todoList.length -1;
             let no = parseInt(this.todoList[idx].no + 1)
-            let todos = {no, todo}
+            let todos = {no, todo,calcelFlag: false}
             this.todoList.splice(this.todoList.length,0,todos)
         },
         deleteTodo(no) {
             this.todoList = this.todoList.filter(todo => todo.no == no ? false : true)
         },
-        cancleTodo(cancelFlag) {
-            this.cancelFlag = cancelFlag == true ? false : true;
+        cancleTodo(no) {
+            for (let i = 0; i < this.todoList.length; i++) {
+              if (this.todoList[i].no == no) {
+              this.todoList[i].cancelFlag = !this.todoList[i].cancelFlag
+              break;
+              }
+            }
         }
     }
 }
